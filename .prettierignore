@@ -1,0 +1,10 @@
+# Ignore artifacts:
+coverage
+node_modules
+.next
+out
+build
+.next
+*.log
+.env*
+public
