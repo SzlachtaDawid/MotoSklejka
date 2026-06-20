@@ -4,6 +4,7 @@ import "./globals.css";
 import Container from "./_components/Container";
 import NavBar from "./_components/NavBar/NavBar";
 import Footer from "./_components/Footer";
+import Providers from "./_components/Providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark" className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}>
       <body className="flex min-h-screen flex-col">
-        <NavBar />
-        <Container>{children}</Container>
-        <Footer />
+        <Providers>
+          <NavBar />
+          <Container>{children}</Container>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

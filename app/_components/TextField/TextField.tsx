@@ -4,9 +4,10 @@ import clsx from "clsx";
 type Props = {
   name: string;
   label: string;
+  type?: string;
 };
 
-const TextField = ({ name, label }: Props) => {
+const TextField = ({ name, label, type = "text" }: Props) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -18,7 +19,7 @@ const TextField = ({ name, label }: Props) => {
             {label}
           </label>
           <input
-            type="email"
+            type={type}
             id={name}
             className={clsx("input", invalid && "input-error")}
             placeholder={label}
