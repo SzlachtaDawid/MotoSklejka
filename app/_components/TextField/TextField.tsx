@@ -14,7 +14,7 @@ const TextField = ({ name, label, type = "text" }: Props) => {
       name={name}
       control={control}
       render={({ field, fieldState: { invalid, error } }) => (
-        <>
+        <div className="flex flex-col gap-1">
           <label htmlFor={name} className="label">
             {label}
           </label>
@@ -26,7 +26,7 @@ const TextField = ({ name, label, type = "text" }: Props) => {
             {...field}
           />
           {invalid && <p className={clsx("label", invalid && "text-error")}>{error?.message}</p>}
-        </>
+        </div>
       )}
     />
   );
