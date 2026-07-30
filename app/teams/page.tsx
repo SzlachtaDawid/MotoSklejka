@@ -34,12 +34,12 @@ const Teams = () => {
       </div>
 
       <div className="grid w-full max-w-2xl gap-4 text-left sm:grid-cols-2">
-        {features.map((f) => (
-          <div key={f.title} className="card bg-base-200 border-base-300 border">
+        {features.map(({ title, icon, desc }) => (
+          <div key={title} className="card bg-base-200 border-base-300 border">
             <div className="card-body gap-2 p-5">
-              <div className="text-3xl">{f.icon}</div>
-              <h2 className="card-title text-base">{f.title}</h2>
-              <p className="text-base-content/60 text-sm">{f.desc}</p>
+              <div className="text-3xl">{icon}</div>
+              <h2 className="card-title text-base">{title}</h2>
+              <p className="text-base-content/60 text-sm">{desc}</p>
             </div>
           </div>
         ))}

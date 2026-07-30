@@ -2,7 +2,7 @@
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
-import TextField from "@/app/_components/TextField/TextField";
+import TextField from "@/app/_components/forms/TextField";
 import { signUp } from "./actions";
 
 const schema = object({
@@ -43,7 +43,7 @@ const SignUp = () => {
     <FormProvider {...methods}>
       <div className="flex flex-1 items-center justify-center">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box mt-10 w-xs border p-4">
             <legend className="fieldset-legend">Rejestracja</legend>
             <TextField name="name" label="Twoja nazwa" />
             <TextField name="email" label="Email" type="email" />

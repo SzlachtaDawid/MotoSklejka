@@ -1,13 +1,15 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { array, boolean, object, string } from "yup";
-import TextField from "@/app/_components/TextField/TextField";
-import Checkbox from "@/app/_components/Checkbox/Checkbox";
-import CheckboxGroup from "@/app/_components/CheckboxGroup/CheckboxGroup";
+import { useRouter } from "next/navigation";
+import TextField from "@/app/_components/forms/TextField";
+import Checkbox from "@/app/_components/forms/Checkbox";
+import CheckboxGroup from "@/app/_components/forms/CheckboxGroup";
 import { MOTORCYCLE_TYPES, RIDING_STYLES } from "@/app/lib/tripOptions";
+import { createTrip } from "./actions";
 
 type Location = {
   lat: number;
@@ -43,6 +45,8 @@ type Inputs = {
 const TripModal = forwardRef<HTMLDialogElement, Props>(({ location }, ref) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useImperativeHandle(ref, () => dialogRef.current as HTMLDialogElement);
+  const router = useRouter();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const methods = useForm<Inputs>({
     defaultValues: {
@@ -62,11 +66,16 @@ const TripModal = forwardRef<HTMLDialogElement, Props>(({ location }, ref) => {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // Persystencja (Server Action + model Trip w Prisma) to przyszły krok — na razie tylko log.
-    console.log("Nowa propozycja wyjazdu (niezapisana):", { ...data, location });
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setServerError(null);
+    const result = await createTrip({ ...data, location });
+    if (result?.error) {
+      setServerError(result.error);
+      return;
+    }
     methods.reset();
     dialogRef.current?.close();
+    router.refresh();
   };
 
   return (
@@ -95,6 +104,11 @@ const TripModal = forwardRef<HTMLDialogElement, Props>(({ location }, ref) => {
               <CheckboxGroup name="motorcycleTypes" label="Typy motocykli" options={MOTORCYCLE_TYPES} />
               <CheckboxGroup name="ridingStyle" label="Styl jazdy" options={RIDING_STYLES} />
             </fieldset>
+            {serverError && (
+              <div role="alert" className="alert alert-error">
+                <span>{serverError}</span>
+              </div>
+            )}
             <button type="submit" className="btn btn-primary mt-4 w-full" disabled={isSubmitting}>
               Zaplanuj
             </button>

@@ -5,7 +5,9 @@ import { object, string } from "yup";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import TextField from "@/app/_components/TextField/TextField";
+import TextField from "@/app/_components/forms/TextField";
+import { use } from "react";
+import RedirectedInfo from "./RedirectedInfo";
 
 const schema = object({
   email: string().required("Pole wymagane").email("Email jest niepoprawny"),
@@ -17,7 +19,8 @@ type Inputs = {
   password: string;
 };
 
-const Login = () => {
+const Login = ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) => {
+  const { redirected } = use(searchParams);
   const router = useRouter();
   const methods = useForm<Inputs>({
     defaultValues: {
@@ -42,10 +45,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center py-6">
+      {redirected === "true" && <RedirectedInfo />}
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box mt-10 mb-8 w-xs border p-4">
+          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box mt-6 mb-8 w-xs border p-4">
             <legend className="fieldset-legend">Logowanie</legend>
             <TextField name="email" label="Email" type="email" />
             <TextField name="password" label="Hasło" type="password" />

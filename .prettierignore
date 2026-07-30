@@ -8,3 +8,6 @@ build
 *.log
 .env*
 public
+
+# Markdown - formatted manually
+*.md

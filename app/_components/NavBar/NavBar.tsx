@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import NavBarList from "./NavBarList";
+import ThemeController from "./ThemeController";
 
 const NavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -30,7 +31,10 @@ const NavBar = () => {
               </svg>
             </label>
           </div>
-          <div className="mx-2 flex-1 px-2">MotoSklejka</div>
+          <div className="mx-2 flex flex-1 gap-5 px-2">
+            <p>MotoSklejka</p>
+            <ThemeController />
+          </div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal items-center space-x-3 p-0">
               {/* Navbar menu content here */}

@@ -13,7 +13,7 @@ export default function HomePage() {
               podobnym stylu jazdy i poziomie doświadczenia, i ruszajcie razem.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Link href="/account" className="btn btn-primary">
+              <Link href="/sign-up" className="btn btn-primary">
                 Załóż konto
               </Link>
               <Link href="/map" className="btn btn-outline">
@@ -39,15 +39,9 @@ export default function HomePage() {
         />
         <FeatureCard
           title="Konto"
-          description="Zarejestruj się, zaloguj i zarządzaj profilem: motocyklem, poziomem doświadczenia, historią wyjazdów i zespołami, do których należysz."
-          actionLabel="Zaloguj / Zarejestruj"
-          actionHref="/account"
-        />
-        <FeatureCard
-          title="O projekcie"
-          description="Cześć! Jestem programistą, a także motocyklistą 🏍️. MotoSklejkę tworzę po pracy, z pasji — chcę zbudować miejsce, które realnie pomoże ludziom częściej wyjeżdżać razem, a nie szukać kompanów na grupach FB. Strona jest w budowie — będzie się rozwijać!"
-          actionLabel="Czytaj więcej"
-          actionHref="/about-project"
+          description="Zaloguj się i zarządzaj profilem: motocyklem, poziomem doświadczenia, historią wyjazdów i zespołami, do których należysz."
+          actionLabel="Zaloguj"
+          actionHref="/login"
         />
       </section>
     </div>
