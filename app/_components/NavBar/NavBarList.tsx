@@ -40,7 +40,9 @@ const NavBarList = ({ onLinkClick }: Props) => {
             {session ? (
               <>
                 <li>
-                  <span className="font-semibold">{session.user?.name}</span>
+                  <Link href="/account" onClick={onLinkClick}>
+                    Twoje konto
+                  </Link>
                 </li>
                 <li>
                   <button onClick={() => signOut({ callbackUrl: "/" })}>Wyloguj</button>
