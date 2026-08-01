@@ -24,7 +24,7 @@ type Props = {
 };
 
 const MapView = ({ trips }: Props) => {
-  const [clickedPoint, setClickedPoint] = useState(null);
+  const [clickedPoint, setClickedPoint] = useState<google.maps.LatLngLiteral | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
   const [openTripId, setOpenTripId] = useState<string | null>(null);
   const [markerRef, marker] = useAdvancedMarkerRef();
