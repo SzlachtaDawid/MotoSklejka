@@ -50,14 +50,14 @@ const MapView = ({ trips }: Props) => {
 
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY_DEMO!}>
-      <div className="m-auto">
+      <div className="mx-auto aspect-square w-full max-w-125">
         <Map
           mapId="DEMO_MAP_ID"
           defaultCenter={{ lat: 52.0693, lng: 19.4803 }}
           defaultZoom={6}
           clickableIcons={false}
           onClick={handleMapClick}
-          style={{ height: "500px", width: "500px" }}
+          style={{ height: "100%", width: "100%" }}
         >
           {trips.map((trip) => (
             <TripMarker
