@@ -3,15 +3,12 @@ name: github-CI
 on: [push]
 
 jobs:
-<<<<<<< HEAD
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-=======
->>>>>>> c95041e (BR-3: Reduce github actions steps)
   build:
     runs-on: ubuntu-latest
     env:
@@ -20,12 +17,6 @@ jobs:
       NEXT_PUBLIC_GOOGLE_MAPS_KEY_DEMO: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAPS_KEY_DEMO }}
 
     steps:
-<<<<<<< HEAD
-=======
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
->>>>>>> c95041e (BR-3: Reduce github actions steps)
       - uses: actions/checkout@v6
       - name: Use Node.js
         uses: actions/setup-node@v7
