@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   APIProvider,
   Map,
@@ -10,9 +10,10 @@ import {
   useMapsLibrary,
   type MapMouseEvent,
 } from "@vis.gl/react-google-maps";
-import TripModal from "./TripModal";
-import type { TripForMap } from "./page";
+
+import type { TripForMap } from "../page";
 import TripMarker from "./TripMarker";
+import TripModal from "./TripModal/TripModal";
 
 type SelectedLocation = {
   lat: number;
@@ -28,7 +29,7 @@ const MapView = ({ trips }: Props) => {
   const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
   const [openTripId, setOpenTripId] = useState<string | null>(null);
   const [markerRef, marker] = useAdvancedMarkerRef();
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const geocodingLib = useMapsLibrary("geocoding");
   const geocoder = useMemo(() => (geocodingLib ? new geocodingLib.Geocoder() : null), [geocodingLib]);
 
@@ -89,7 +90,7 @@ const MapView = ({ trips }: Props) => {
                 <p className="text-neutral-800">
                   {selectedLocation.lat.toFixed(5)}, {selectedLocation.lng.toFixed(5)}
                 </p>
-                <button className="btn btn-primary btn-sm" onClick={() => dialogRef.current?.showModal()}>
+                <button className="btn btn-primary btn-sm" onClick={() => setIsModalOpen(true)}>
                   Zaplanuj wyjazd
                 </button>
               </div>
@@ -97,7 +98,7 @@ const MapView = ({ trips }: Props) => {
           )}
         </Map>
       </div>
-      <TripModal ref={dialogRef} location={selectedLocation} />
+      <TripModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} location={selectedLocation} />
     </APIProvider>
   );
 };

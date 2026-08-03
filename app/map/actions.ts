@@ -1,7 +1,7 @@
 "use server";
 import { auth } from "@/auth";
 import { prisma } from "@/app/lib/db";
-import { MOTORCYCLE_TYPES, RIDING_STYLES, DAILY_TRIP_LIMIT, MAX_TRIPS_CREATED_PER_DAY } from "@/app/lib/tripOptions";
+import { DAILY_TRIP_LIMIT, MAX_TRIPS_CREATED_PER_DAY } from "@/app/lib/tripOptions";
 
 type Location = {
   lat: number;
@@ -17,11 +17,8 @@ type CreateTripInput = {
   returnToStart: boolean;
   motorcycleTypes: string[];
   ridingStyle: string[];
-  location: Location | null;
+  location: Location;
 };
-
-const MOTORCYCLE_TYPE_VALUES = MOTORCYCLE_TYPES.map((t) => t.value);
-const RIDING_STYLE_VALUES = RIDING_STYLES.map((s) => s.value);
 
 const startOfDay = (date: Date) => {
   const result = new Date(date);
@@ -41,30 +38,9 @@ export async function createTrip(data: CreateTripInput) {
     return { error: "Musisz być zalogowany, aby zaplanować wyjazd" };
   }
 
-  const location = data.location;
   const startDateTime = new Date(data.startDateTime);
   const groupSize = Number(data.groupSize);
   const estimatedDistanceKm = Number(data.estimatedDistanceKm);
-
-  const isValid =
-    Boolean(data.destination) &&
-    Boolean(data.estimatedDuration) &&
-    !Number.isNaN(startDateTime.getTime()) &&
-    Number.isFinite(groupSize) &&
-    groupSize > 0 &&
-    Number.isFinite(estimatedDistanceKm) &&
-    estimatedDistanceKm > 0 &&
-    data.motorcycleTypes.length > 0 &&
-    data.motorcycleTypes.every((type) => MOTORCYCLE_TYPE_VALUES.includes(type as (typeof MOTORCYCLE_TYPE_VALUES)[number])) &&
-    data.ridingStyle.length > 0 &&
-    data.ridingStyle.every((style) => RIDING_STYLE_VALUES.includes(style as (typeof RIDING_STYLE_VALUES)[number])) &&
-    location !== null &&
-    Number.isFinite(location.lat) &&
-    Number.isFinite(location.lng);
-
-  if (!isValid || !location) {
-    return { error: "Nieprawidłowe dane formularza" };
-  }
 
   try {
     const tripsOnSameDate = await prisma.trip.count({
@@ -99,8 +75,8 @@ export async function createTrip(data: CreateTripInput) {
         returnToStart: data.returnToStart,
         motorcycleTypes: data.motorcycleTypes,
         ridingStyle: data.ridingStyle,
-        lat: location.lat,
-        lng: location.lng,
+        lat: data.location.lat,
+        lng: data.location.lng,
       },
     });
 

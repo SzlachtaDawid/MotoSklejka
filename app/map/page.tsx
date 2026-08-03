@@ -1,7 +1,7 @@
 import { Prisma } from "@/app/generated/prisma/client";
 import { prisma } from "@/app/lib/db";
-import MapView from "./MapView";
-import TripsList from "./TripsList";
+import MapView from "./_components/MapView";
+import TripsList from "./_components/TripsList";
 
 const tripSelect = {
   id: true,
