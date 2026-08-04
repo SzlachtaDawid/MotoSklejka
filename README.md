@@ -26,8 +26,6 @@ This is a learning project, built deliberately rather than from a tutorial. I wa
 - **CI with GitHub Actions** — so that a broken build or a failing test never reaches the main branch.
 - **Testing** — component tests with Vitest + Testing Library, particularly around form validation.
 
-Along the way I ran into real problems worth solving properly rather than working around — a few are documented in [Implementation notes](#implementation-notes-things-i-had-to-figure-out) below.
-
 ## Features
 
 | Feature | Status | Notes |
@@ -105,16 +103,6 @@ prisma/schema.prisma            # User + Trip models
 **Data flow on `/map`:** the page is a Server Component that queries Postgres directly through Prisma and passes trips down as props. Creating a trip calls a Server Action, which re-checks the session and enforces the limits before writing, then the client triggers `router.refresh()` so the server re-renders with the new data. No client-side data fetching, no API layer in between.
 
 **Forms** follow one consistent pattern, split into three files each: the component (markup only), a `useXForm` hook (react-hook-form wiring and submit handling), and a `schema.ts` (yup schema, types, defaults). Field components are shared and read the form context, so no form wires up a raw `<input>`.
-
-### Implementation notes (things I had to figure out)
-
-A few problems that took real debugging rather than a copy-paste fix:
-
-- **Prisma 7 requires a driver adapter.** The new `prisma-client` generator drops the Rust query engine, so `PrismaClient` cannot connect on its own — the `datasource` block intentionally has no `url`, and the Neon adapter is passed at construction time in `app/lib/db.ts`.
-- **next-auth strips `id` from the session by default.** The default Auth.js `session` callback reduces the session to `{ name, email, image }`, so every Server Action needing the current user got `undefined`. Fixed with explicit `jwt`/`session` callbacks plus a TypeScript module augmentation in `types/next-auth.d.ts`.
-- **The theme switcher couldn't be switched back to light.** The first version used daisyUI's CSS-only theme controller, but the `prefers-color-scheme: dark` media query out-specified the default `:where(:root)` rule, so anyone on a dark-mode OS was stuck. Rewritten to set `data-theme` from JavaScript and persist the choice.
-- **Two different rate limits, not one.** Limiting "trips per day" turned out to be ambiguous: a user can plan several trips for the same *future* date, and separately spam many trips in one *sitting*. Those are different limits, so `DAILY_TRIP_LIMIT` counts by trip date and `MAX_TRIPS_CREATED_PER_DAY` counts by creation time.
-- **Environment variables are read by two different tools.** Next.js and the Prisma CLI load `.env` files differently — the Prisma CLI goes through `dotenv`, which never reads `.env.local`. `DATABASE_URL` therefore has to live in `.env`; the split is documented in the example files.
 
 ## Testing
 
