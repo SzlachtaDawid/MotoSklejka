@@ -1,5 +1,5 @@
-import DirectionButton from "../_components/DirectionButton";
-import { TripForMap } from "./page";
+import DirectionButton from "../../_components/DirectionButton";
+import { TripForMap } from "../page";
 
 type Props = {
   trips: TripForMap[];

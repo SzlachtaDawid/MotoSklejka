@@ -1,7 +1,7 @@
 import { AdvancedMarker, InfoWindow, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
-import { TripForMap } from "./page";
+import { TripForMap } from "../page";
 import { Rocket } from "lucide-react";
-import DirectionButton from "../_components/DirectionButton";
+import DirectionButton from "../../_components/DirectionButton";
 
 type TripMarkerProps = {
   trip: TripForMap;

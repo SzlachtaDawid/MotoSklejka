@@ -1,64 +1,16 @@
 "use client";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { object, string } from "yup";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import TextField from "@/app/_components/forms/TextField";
 import { use } from "react";
 import RedirectedInfo from "./RedirectedInfo";
-
-const schema = object({
-  email: string().required("Pole wymagane").email("Email jest niepoprawny"),
-  password: string().required("Pole wymagane"),
-});
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import LoginForm from "./_components/LoginForm/LoginForm";
 
 const Login = ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) => {
   const { redirected } = use(searchParams);
-  const router = useRouter();
-  const methods = useForm<Inputs>({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    resolver: yupResolver(schema),
-  });
-  const {
-    handleSubmit,
-    setError,
-    formState: { isSubmitting },
-  } = methods;
-
-  const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    const result = await signIn("credentials", { email, password, redirect: false });
-    if (result?.error) {
-      setError("password", { message: "Nieprawidłowy email lub hasło" });
-    } else {
-      router.push("/");
-    }
-  };
 
   return (
     <div className="flex flex-col items-center py-6">
       {redirected === "true" && <RedirectedInfo />}
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="fieldset bg-base-200 border-base-300 rounded-box mt-6 mb-8 w-xs border p-4">
-            <legend className="fieldset-legend">Logowanie</legend>
-            <TextField name="email" label="Email" type="email" />
-            <TextField name="password" label="Hasło" type="password" />
-            <button className="btn btn-neutral mt-4 w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Loguję..." : "Zaloguj"}
-            </button>
-          </fieldset>
-        </form>
-      </FormProvider>
+      <LoginForm />
       <div role="alert" className="alert alert-info max-w-xs">
         <svg
           xmlns="http://www.w3.org/2000/svg"
