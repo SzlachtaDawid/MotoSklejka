@@ -6,7 +6,7 @@
 
 > _"Sklejka"_ is Polish biker slang for riding together as a group. The app's UI is in Polish; this README and the codebase are in English.
 
-**🔗 Live demo: [REPLACE-ME.vercel.app](https://REPLACE-ME.vercel.app)** &nbsp;•&nbsp; deployed on Vercel with a Neon serverless Postgres database.
+**🔗 Live demo: [https://moto-sklejka-5ijck70q0-szlachta-97s-projects.vercel.app/](https://moto-sklejka-5ijck70q0-szlachta-97s-projects.vercel.app/)** &nbsp;•&nbsp; deployed on Vercel with a Neon serverless Postgres database.
 
 <!-- SCREENSHOT: docs/screenshots/hero.png — the landing page or the map view, ideally with a few trip markers visible. This is the first thing a recruiter sees, so pick the most visually complete screen. -->
 
@@ -125,7 +125,7 @@ npm test              # watch mode
 npx vitest run        # single run (this is what CI does)
 ```
 
-<!-- SCREENSHOT (optional): docs/screenshots/tests.png — terminal output of `npx vitest run` with all tests passing. -->
+![Test suite passing](docs/screenshots/tests.png)
 
 ## CI
 
