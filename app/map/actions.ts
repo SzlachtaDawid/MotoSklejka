@@ -2,6 +2,7 @@
 import { auth } from "@/auth";
 import { prisma } from "@/app/lib/db";
 import { DAILY_TRIP_LIMIT, MAX_TRIPS_CREATED_PER_DAY } from "@/app/lib/tripOptions";
+import { revalidatePath } from "next/cache";
 
 type Location = {
   lat: number;
@@ -80,6 +81,7 @@ export async function createTrip(data: CreateTripInput) {
       },
     });
 
+    revalidatePath("/map");
     return { success: true };
   } catch {
     return { error: "Nie udało się zapisać wyjazdu, spróbuj ponownie" };
