@@ -27,9 +27,9 @@ export const useTripForm = ({ location, onSuccess }: Props) => {
       setServerError(result.error);
       return;
     }
+    router.refresh();
     methods.reset();
     onSuccess();
-    router.refresh();
   };
 
   return {
