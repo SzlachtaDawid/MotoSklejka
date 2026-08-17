@@ -6,7 +6,7 @@
 
 > _"Sklejka"_ is Polish biker slang for riding together as a group. The app's UI is in Polish; this README and the codebase are in English.
 
-**🔗 Live demo: [https://moto-sklejka-5ijck70q0-szlachta-97s-projects.vercel.app/](https://moto-sklejka-5ijck70q0-szlachta-97s-projects.vercel.app/)** &nbsp;•&nbsp; deployed on Vercel with a Neon serverless Postgres database.
+**🔗 Live demo: [https://moto-sklejka.vercel.app/](https://moto-sklejka.vercel.app/)** &nbsp;•&nbsp; deployed on Vercel with a Neon serverless Postgres database.
 
 <!-- SCREENSHOT: docs/screenshots/hero.png — the landing page or the map view, ideally with a few trip markers visible. This is the first thing a recruiter sees, so pick the most visually complete screen. -->
 
